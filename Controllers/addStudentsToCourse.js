@@ -3,7 +3,7 @@ const Course = require('../models/Course');
 
 exports.addStudentsToCourse = async (req, res) => {
   try {
-    const { session, semester, class: className, section, courseName, students } = req.body;
+    const { session, semester,  section, courseName, students } = req.body;
 
     // Find course by name (case-insensitive)
     const course = await Course.findOne({ courseName: new RegExp('^' + courseName + '$', 'i') });
@@ -19,9 +19,9 @@ exports.addStudentsToCourse = async (req, res) => {
           session,
           name: s.name,
           rollNo: s.rollNo,
-          class: className,
-          section: section || s.section || '',
-          courses: [courseId]
+          section: section ,
+          courses: [courseId],
+          semester: semester,
           // Don't set email field at all - let it be undefined
         });
       } else {
